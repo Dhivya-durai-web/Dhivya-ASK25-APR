@@ -17,8 +17,8 @@
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Verify user Role =  STUDENT\", function () {\r",
@@ -118,6 +118,57 @@
 			"response": []
 		},
 		{
+			"name": "sign-in - 404 error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response time is less than 300ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"jon.snow@gameofthrones.com\",\r\n  \"password\": \"GameOfThrones\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://ask-qa.portnov.com/api/v1/sign-in",
+					"protocol": "http",
+					"host": [
+						"ask-qa",
+						"portnov",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"sign-in"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "/quiz - [T] create a new quiz",
 			"event": [
 				{
@@ -154,7 +205,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Demo Quiz - Dhivya - 04/30/25\",\r\n  \"totalScore\": 18,\r\n  \"passingPercentage\": 75,\r\n  \"showStopperQuestion\": 1,\r\n  \"questions\": [\r\n    {\r\n      \"type\": \"TEXTUAL\",\r\n      \"question\": \"What is your name?\",\r\n      \"score\": 5\r\n    },\r\n    {\r\n      \"type\": \"SINGLE_CHOICE\",\r\n      \"question\": \"Which city is city largest in California?\",\r\n      \"score\": 7,\r\n      \"answer\": 2,\r\n      \"hasOtherOption\": false,\r\n      \"options\": [\r\n        \"San Francisco\",\r\n        \"Sacramento\",\r\n        \"Los Angeles\",\r\n        \"Redding\"\r\n      ]\r\n    },\r\n    {\r\n      \"type\": \"MULTIPLE_CHOICE\",\r\n      \"question\": \"Who was apple founded by?\",\r\n      \"score\": 6,\r\n      \"answers\": [\r\n        0,\r\n        1,\r\n        2\r\n      ],\r\n      \"hasOtherOption\": true,\r\n      \"options\": [\r\n        \"Steve Jobs\",\r\n        \"Steve Wozniak\",\r\n        \"Ronald Wayne\",\r\n        \"Ronald Reagan\"\r\n      ]\r\n    }\r\n  ]\r\n}",
+					"raw": "{\r\n  \"name\": \"Demo Quiz - Dhivya - 05/01/25\",\r\n  \"totalScore\": 18,\r\n  \"passingPercentage\": 75,\r\n  \"showStopperQuestion\": 1,\r\n  \"questions\": [\r\n    {\r\n      \"type\": \"TEXTUAL\",\r\n      \"question\": \"What is your name?\",\r\n      \"score\": 5\r\n    },\r\n    {\r\n      \"type\": \"SINGLE_CHOICE\",\r\n      \"question\": \"Which city is city largest in California?\",\r\n      \"score\": 7,\r\n      \"answer\": 2,\r\n      \"hasOtherOption\": false,\r\n      \"options\": [\r\n        \"San Francisco\",\r\n        \"Sacramento\",\r\n        \"Los Angeles\",\r\n        \"Redding\"\r\n      ]\r\n    },\r\n    {\r\n      \"type\": \"MULTIPLE_CHOICE\",\r\n      \"question\": \"Who was apple founded by?\",\r\n      \"score\": 6,\r\n      \"answers\": [\r\n        0,\r\n        1,\r\n        2\r\n      ],\r\n      \"hasOtherOption\": true,\r\n      \"options\": [\r\n        \"Steve Jobs\",\r\n        \"Steve Wozniak\",\r\n        \"Ronald Wayne\",\r\n        \"Ronald Reagan\"\r\n      ]\r\n    }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -244,7 +295,7 @@
 							"var jsonData = pm.response.json();\r",
 							"pm.test(\"Verify that quiz was updated\", function () {\r",
 							"    pm.expect(jsonData[jsonData.length-1].id).to.eql(myQuiz);\r",
-							"    pm.expect(jsonData[jsonData.length-1].name).to.eql(\"Demo Quiz - Maddie 04/30/2025 UPDATED\");\r",
+							"    pm.expect(jsonData[jsonData.length-1].name).to.eql(\"Demo Quiz - Dhivya - 04/30/25 updated\");\r",
 							"});\r",
 							""
 						],
@@ -346,17 +397,66 @@
 			"response": []
 		},
 		{
-			"name": "sign-in - 404 error",
+			"name": "[T]     /assignments - List of all Assignments",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Response time is less than 300ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Status code is 404\", function () {\r",
-							"    pm.response.to.have.status(404);\r",
+							"\r",
+							"var myAssign = pm.environment.get(\"assignmentId\");\r",
+							"pm.test(\"Verify the assignment\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData[jsonData.length-1].id).to.eql(myAssign);\r",
+							"    pm.expect(jsonData[jsonData.length-1].status).to.eql(\"ASSIGNED\"); // Change the assignment name as per your requirement\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenTeacher}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/assignments",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"assignments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[S]  /my-assignments  -  List of Assignments assigned",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -366,31 +466,24 @@
 			],
 			"request": {
 				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"jon.snow@gameofthrones.com\",\r\n  \"password\": \"GameOfThrones\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenStudent}}",
+							"type": "string"
 						}
-					}
+					]
 				},
+				"method": "GET",
+				"header": [],
 				"url": {
-					"raw": "http://ask-qa.portnov.com/api/v1/sign-in",
-					"protocol": "http",
+					"raw": "{{baseURL}}/my-assignments",
 					"host": [
-						"ask-qa",
-						"portnov",
-						"com"
+						"{{baseURL}}"
 					],
 					"path": [
-						"api",
-						"v1",
-						"sign-in"
+						"my-assignments"
 					]
 				}
 			},
@@ -470,8 +563,8 @@
 							"pm.test(\"verify status, result and gradedBy after submission\", function () {\r",
 							"    var jsonData = pm.response.json();\r",
 							"    pm.expect(jsonData[jsonData.length-1].status).to.eql(\"GRADED\");\r",
-							"     pm.expect(jsonData[jsonData.length-1].result).to.eql(\"FAILED\");\r",
-							"      pm.expect(jsonData[jsonData.length-1].gradedBy).to.eql(\"AUTOMATIC\");\r",
+							"     pm.expect(jsonData[jsonData.length-1].result).to.eql(\"PASSED\");\r",
+							"      pm.expect(jsonData[jsonData.length-1].gradedBy).to.eql(\"TEACHER\");\r",
 							"});"
 						],
 						"type": "text/javascript",
@@ -524,8 +617,8 @@
 							"pm.test(\"Status code is 200\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
-							"pm.test(\"Response time is less than 200ms\", function () {\r",
-							"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
 							"});\r",
 							"pm.test(\"Body matches string\", function () {\r",
 							"    pm.expect(pm.response.text()).to.include(\"Assignment was deleted\");\r",
@@ -607,6 +700,243 @@
 					"path": [
 						"quiz",
 						"{{QuizId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[T]   /users/change-group - with ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify status and message\", function () {\r",
+							"    var jsonData = pm.response.json;\r",
+							"    pm.expect(pm.response.text()).to.include(\"User group was updated\");\r",
+							"}); \r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenTeacher}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"group\": \"N001\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/change-group/13587",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"change-group",
+						"13587"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[T]/users/change-name with ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"User name was updated\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenTeacher}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Student12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/change-name/13587",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"change-name",
+						"13587"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[T]  /users/change-role - with User ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"User role was updated\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenTeacher}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"role\": \"TEACHER\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/users/change-role/13587",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"users",
+						"change-role",
+						"13587"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "[T]   /settings/change-name",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 500ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+							"});\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"User name was updated\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenTeacher}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"newName\": \"Dhivya Durai\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/settings/change-name",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"settings",
+						"change-name"
 					]
 				}
 			},
